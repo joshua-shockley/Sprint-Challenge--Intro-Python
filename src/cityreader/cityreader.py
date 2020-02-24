@@ -10,7 +10,7 @@ class City:
         self.lon = lon
 
     def __str__(self):
-        return f'{self.name}, {self.lat}, {self.lon}'
+        return f"{self.name}, {self.lat}, {self.lon}"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -29,9 +29,10 @@ cities = []
 
 
 def cityreader(cities=[]):
-    # TODO Implement the functionality to read from the 'cities.csv' file
-    # For each city record, create a new City instance and add it to the
-    # `cities` list
+
+  # TODO Implement the functionality to read from the 'cities.csv' file
+  # For each city record, create a new City instance and add it to the
+  # `cities` list
     with open('cities.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
@@ -44,12 +45,10 @@ def cityreader(cities=[]):
 
 
 cityreader(cities)
-# print(help(cities))
+
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(type(c))
     print(c)
-
 
 # STRETCH GOAL!
 #
@@ -82,13 +81,48 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+# already did the work above to organize the list into cities with lat and lon
 
-def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
+
+def cityreader_stretch(cities):
+
+    ll1 = input(
+        'enter first set of lat and lon with space between for first coordinate ex: 32 -100\n---> ').split()
+    lat1 = ll1[0]
+    lon1 = ll1[1]
+    ll2 = input(
+        'enter second set of data in same fashion ex: 32 -120\n---> ').split()
+    lat2 = ll2[0]
+    lon2 = ll2[1]
+    print(lat1, lat2, lon1, lon2)
     # within will hold the cities that fall within the specified region
     within = []
-
+    lowerlat = None
+    higherlat = None
+    lowerlon = None
+    higherlon = None
+    if lat1 < lat2:
+        lowerlat = lat1
+        higherlat = lat2
+    if lat2 < lat1:
+        lowerlat = lat2
+        higherlat = lat1
+    if lon1 < lon2:
+        lowerlon = lon1
+        higherlon = lon2
+    if lon2 < lon1:
+        lowerlon = lon2
+        higherlon = lon1
+    print('right before assigning to within', type(lowerlat),
+          lowerlat, type(lowerlon), lowerlon, type(higherlat), higherlat, type(higherlon), higherlon)
+    within = [f"{city.name}: ({float(city.lat)}, {float(city.lon)})" for city in cities if city.lat <=
+              higherlat and city.lat >= lowerlat and city.lon <= higherlon and city.lon >= lowerlon]
+    print(within)
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
     return within
+
+
+cityreader_stretch(cities)
